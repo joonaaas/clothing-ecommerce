@@ -1,9 +1,18 @@
 .sign-in {
-  width: 30vw;
+  width: 380px;
   display: flex;
   flex-direction: column;
-}
 
-.title {
-  margin: 10px 0;
+  .title {
+    margin: 10px 0;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  h2 {
+    margin: 1.5rem 0;
+  }
 }
