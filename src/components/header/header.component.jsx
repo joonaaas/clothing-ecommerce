@@ -44,9 +44,10 @@ const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
 	hidden,
 })
 
+// *** WITHOUT DESTRUCTURING *** 👆
 //?  const mapStateToProps = (state) => ({
 //?	 currentUser: state.user.currentUser,
 //?	 hidden: state.cart.hidden,
-//?  })                            *** WITHOUT DESTRUCTURING ***
+//?  })
 
 export default connect(mapStateToProps)(Header)
