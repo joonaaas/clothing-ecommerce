@@ -4,7 +4,6 @@ import './collections-overview.styles.scss'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
-import CollectionItem from '../collection-item/collection-item.component'
 import CollectionPreview from '../collection-preview/collection-preview.component'
 
 import { selectCollectionsForPreview } from '../../redux/shop/shop.selector'
