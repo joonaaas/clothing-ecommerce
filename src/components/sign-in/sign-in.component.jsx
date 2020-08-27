@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import './sign-in.styles.scss'
 
 import FromInput from '../form-input/form-input.component'
 import CustomButton from '../custom-button/custom-button.component'
 
 import { auth, signInWithGoogle } from '../../firebase/firebase.utils'
+
+import { SignInContainer, ButtonComponent } from './sign-in.styles'
 
 class SignIn extends Component {
 	state = {
@@ -29,9 +30,10 @@ class SignIn extends Component {
 
 		this.setState({ [name]: value })
 	}
+
 	render() {
 		return (
-			<div className='sign-in'>
+			<SignInContainer>
 				<h2>I already have an account</h2>
 				<span>Sign in with your email and password</span>
 
@@ -52,14 +54,14 @@ class SignIn extends Component {
 						handleChange={this.handleChange}
 						required
 					/>
-					<div className='buttons'>
+					<ButtonComponent>
 						<CustomButton type='submit'>Sign In</CustomButton>
 						<CustomButton onClick={signInWithGoogle} isGoogleSignIn>
 							Sign In with Google
 						</CustomButton>
-					</div>
+					</ButtonComponent>
 				</form>
-			</div>
+			</SignInContainer>
 		)
 	}
 }
