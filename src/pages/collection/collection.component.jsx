@@ -9,7 +9,7 @@ import { selectCollection } from '../../redux/shop/shop.selector'
 import { CollectionPageContainer, ItemsContainer } from './collection.styles'
 
 const CollectionPage = ({ collection, match }) => {
-	console.log(match.params.collectionId)
+	// console.log(match.params.collectionId)
 
 	const { title, items } = collection
 	return (

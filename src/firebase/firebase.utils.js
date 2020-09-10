@@ -15,13 +15,13 @@ const config = {
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
 	if (!userAuth) return
-
 	// creates a user object
 	const userRef = firestore.doc(`users/${userAuth.uid}`)
+
 	const snapShot = await userRef.get()
+
 	if (!snapShot.exists) {
 		const { displayName, email, photoURL } = userAuth
-
 		const createdAt = new Date()
 
 		try {
@@ -36,7 +36,48 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 			console.log('Error creating user', error.message)
 		}
 	}
+
 	return userRef
+}
+
+export const addCollectionAndDocuments = async (
+	collectionKey,
+	objectsToAdd
+) => {
+	const collectionRef = firestore.collection(collectionKey)
+
+	const batch = firestore.batch()
+
+	objectsToAdd.forEach((obj) => {
+		const newDocRef = collectionRef.doc()
+		batch.set(newDocRef, obj)
+	})
+
+	return await batch.commit() // Fires off the batch. When it succeeds it will resolve a void value/null value
+}
+
+export const convertCollectionsSnapshotToMap = (collections) => {
+	const transformedCollection = collections.docs.map((doc) => {
+		const { title, items } = doc.data()
+		return {
+			routeName: encodeURI(title.toLowerCase()),
+			id: doc.id,
+			title,
+			items,
+		}
+	})
+	// ? 👆 returns an array with objects inside [{...}, {...}]
+	// console.log(transformedCollection)
+
+	const reducer = (accumulator, collection) => {
+		accumulator[collection.title.toLowerCase()] = collection
+		//? accumulator with [] is a property. We can assign specific property; KEY
+		//? First value will be : 👇
+		//* hats : {...}
+		return accumulator
+	}
+
+	return transformedCollection.reduce(reducer, {})
 }
 
 firebase.initializeApp(config)

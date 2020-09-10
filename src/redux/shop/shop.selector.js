@@ -8,14 +8,14 @@ export const selectCollections = createSelector(
 )
 
 export const selectCollection = (collectionUrlParam) =>
-	createSelector(
-		[selectCollections],
-		(collections) => collections[collectionUrlParam]
+	createSelector([selectCollections], (collections) =>
+		collections ? collections[collectionUrlParam] : null
 	)
 
 export const selectCollectionsForPreview = createSelector(
 	[selectCollections],
-	(collections) => Object.keys(collections).map((key) => collections[key])
+	(collections) =>
+		collections ? Object.keys(collections).map((key) => collections[key]) : []
 	//  * 👆 Converting Objects into arrays:
 	//  *  		Our collections are objects. First we get the Object keys (the result will be an array).
 	// 	*			And then map it we will recieve an array of items that we want to get.
