@@ -23,3 +23,8 @@ export const selectCollectionsForPreview = createSelector(
 	// 	? line 1 : const data = { hats:{item: 'a'}, bats:{item: 'b'}, cats:{item: 'c'} }
 	// 	? line 2 : data[bats]
 )
+
+export const selectIsCollectionFetching = createSelector(
+	[selectShop],
+	(shop) => shop.isFetching
+)
