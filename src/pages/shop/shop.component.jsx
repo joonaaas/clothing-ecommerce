@@ -3,7 +3,10 @@ import { Route } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import { fetchCollectionsStartAsync } from '../../redux/shop/shop.actions'
-import { selectIsCollectionFetching } from '../../redux/shop/shop.selector'
+import {
+	selectIsCollectionFetching,
+	selectIsCollectionsLoaded,
+} from '../../redux/shop/shop.selector'
 
 import CollectionsOverview from '../../components/collections-overview/collections-overview.component'
 import CollectionPage from '../collection/collection.component'
@@ -21,7 +24,7 @@ class ShopPage extends React.Component {
 	}
 
 	render() {
-		const { match, isCollectionFetching } = this.props
+		const { match, isCollectionFetching, isCollectionsLoaded } = this.props
 		return (
 			<div className='shop-page'>
 				<Route
@@ -29,7 +32,7 @@ class ShopPage extends React.Component {
 					path={`${match.path}`}
 					render={(props) => (
 						<CollectionsOverviewWithSpinner
-							isLoading={isCollectionFetching}
+							isLoading={isCollectionFetching} // if true then will show spinner
 							{...props}
 						/>
 					)}
@@ -38,7 +41,8 @@ class ShopPage extends React.Component {
 					path={`${match.path}/:collectionId`}
 					render={(props) => (
 						<CollectionsPageWithSpinner
-							isLoading={isCollectionFetching}
+							isLoading={!isCollectionsLoaded}
+							//  ? 👆 we reverse the boolean since we want to stop loading when true;					 							there's an object so we want to stop spinning
 							{...props}
 						/>
 					)}
@@ -54,6 +58,7 @@ class ShopPage extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
 	isCollectionFetching: selectIsCollectionFetching,
+	isCollectionsLoaded: selectIsCollectionsLoaded,
 })
 
 const mapDispatchToProps = (dispatch) => ({
